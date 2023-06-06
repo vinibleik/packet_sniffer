@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from abc import abstractmethod
 from ctypes import BigEndianStructure
 
 
@@ -15,10 +14,7 @@ class Protocol(BigEndianStructure):
 
     def __init__(self, raw_bytes: bytes | None = None) -> None:
         super().__init__()
+        self.next_protocol = None
 
     def __repr__(self) -> str:
         return bytes(self).hex(" ")
-
-    @abstractmethod
-    def next_protocol(self) -> str | None:
-        pass

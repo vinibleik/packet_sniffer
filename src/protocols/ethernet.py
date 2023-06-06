@@ -1,28 +1,32 @@
 from ctypes import c_ubyte, c_ushort
 
-from protocol import Protocol
+from protocols.protocol import Protocol
 
 
 class Ethernet(Protocol):
     _fields_ = [
-        ("dst", c_ubyte * 6),
-        ("src", c_ubyte * 6),
+        ("_dst", c_ubyte * 6),
+        ("_src", c_ubyte * 6),
         ("eth", c_ushort),
     ]
 
     header_len = 14
+
     ethertypes = {
-        0x0800: "ipv4",
+        0x0800: "IPv4",
     }
 
-    def next_protocol(self) -> str | None:
-        return self.ethertypes.get(self.eth)
+    def __init__(self, raw_bytes: bytes | None = None) -> None:
+        super().__init__(raw_bytes)
+        self.next_protocol = self.ethertypes.get(self.eth)
 
+    @property
+    def dst_mac(self) -> str:
+        return bytes(self._dst).hex(":")
 
-if __name__ == "__main__":
-    ex_dst = b"\xe1\xe2\xe3\xe4\xe5\xe6"
-    ex_src = b"\xa1\xa2\xa3\xa4\xa5\xa6"
-    ex_eth = b"\x08\x00"
+    @property
+    def src_mac(self) -> str:
+        return bytes(self._src).hex(":")
 
-    ex_header = ex_dst + ex_src + ex_eth
-    eth_test = Ethernet(ex_header)
+    def __repr__(self) -> str:
+        return f"Ethernet:\n\t{'Source:':<13} {self.src_mac:}\n\t{'Destination:':<13} {self.dst_mac}\n\t{'Ethertype:':<13} {self.next_protocol if self.next_protocol else 'Unknown Protocol'}\n"

@@ -49,4 +49,4 @@ class TCP(Protocol):
         flags = f"\t{'Flags:':<13} {self.flags}"
         win_size = f"\t{'Window Size':<13} {self.window_size}"
         chksum = f"\t{'Checksum:':<13} {self.checksum}"
-        return f"TCP\n{src_port}\n{dst_port}\n{seq_number}\n{ack_number}\n{flags}\n{win_size}\n{chksum}\n"
+        return f"TCP ({self.header_len} bytes:)\n{src_port}\n{dst_port}\n{seq_number}\n{ack_number}\n{flags}\n{win_size}\n{chksum}\n"

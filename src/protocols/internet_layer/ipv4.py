@@ -1,4 +1,4 @@
-from ctypes import c_uint8, c_uint16, c_uint32
+from ctypes import c_uint8, c_uint16
 from socket import AF_INET, inet_ntop
 
 from protocols.protocol import Protocol
@@ -62,4 +62,4 @@ class IPv4(Protocol):
         chksum = f"\t{'CheckSum:':<13} {self.header_checksum}"
         src = f"\t{'Source:':<13} {self.src_ip}"
         dst = f"\t{'Destination:':<13} {self.dst_ip}"
-        return f"IPv4\n{src}\n{dst}\n{dscp}\n{total_length}\n{id_packet}\n{flags}\n{ttl}\n{protocol}\n{chksum}\n"
+        return f"IPv4 ({self.header_len} bytes):\n{src}\n{dst}\n{dscp}\n{total_length}\n{id_packet}\n{flags}\n{ttl}\n{protocol}\n{chksum}\n"

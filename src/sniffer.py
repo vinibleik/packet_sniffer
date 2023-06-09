@@ -15,8 +15,9 @@ with socket(AF_PACKET, SOCK_RAW, ntohs(0x0003)) as sock:
     start = end = 0
 
     for i in range(1, 11):
+        start = 0
         frame = sock.recv(9000)
-        print(f"Frame #{i}\n")
+        print(f"\nFrame #{i} Length: {len(frame)}")
         for proto_name in protocol_queue:
             protocol = getattr(protocols, proto_name, None)
             if protocol is None:
@@ -24,11 +25,11 @@ with socket(AF_PACKET, SOCK_RAW, ntohs(0x0003)) as sock:
             end = start + protocol.header_len
             header = frame[start:end]
             new_proto = protocol(header)
-            print(new_proto)
+            print(new_proto, end="")
             if new_proto.next_protocol is None:
                 break
             protocol_queue.append(new_proto.next_protocol)
             start = end
         data = frame[end:]
-        print(f"Data\n{data}\n\n")
+        # print(f"Data\n{data}\n\n")
         del protocol_queue[1:]

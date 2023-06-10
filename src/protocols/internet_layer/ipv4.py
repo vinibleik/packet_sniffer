@@ -9,9 +9,6 @@ from protocols.protocol import Protocol
     0xFD - 0xFE (253 - 254) -> Use for experimentation and testing
     0xFF (255) -> Reserved 
 """
-protocol_numbers = {
-    0x06: "TCP",
-}
 
 
 class IPv4(Protocol):
@@ -37,13 +34,18 @@ class IPv4(Protocol):
         0b001: "More Fragments (MF)",
     }
 
+    protocol_numbers = {
+        0x06: "TCP",
+        0x11: "UDP",
+    }
+
     header_len = 20
 
     def __init__(self, raw_bytes: bytes | None = None) -> None:
         super().__init__(raw_bytes)
         self.src_ip = inet_ntop(AF_INET, self._src)
         self.dst_ip = inet_ntop(AF_INET, self._dst)
-        self.next_protocol = protocol_numbers.get(self.protocol)
+        self.next_protocol = self.protocol_numbers.get(self.protocol)
 
     @property
     def flags(self) -> str:

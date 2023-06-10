@@ -1,11 +1,10 @@
 from ctypes import c_uint8, c_uint16, c_uint32
 from socket import AF_INET6, inet_ntop
 
-from protocols.internet_layer.ip import IP
 from protocols.protocol import Protocol
 
 
-class IPv6(Protocol, IP):
+class IPv6(Protocol):
     _fields_ = [
         ("version", c_uint32, 4),
         ("traffic_class", c_uint32, 8),
@@ -16,6 +15,11 @@ class IPv6(Protocol, IP):
         ("_src", c_uint16 * 8),
         ("_dst", c_uint16 * 8),
     ]
+
+    protocol_numbers = {
+        0x06: "TCP",
+        0x11: "UDP",
+    }
 
     header_len = 40
 

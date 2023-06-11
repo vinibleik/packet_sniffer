@@ -1,6 +1,6 @@
 # Packet Sniffer
 
-Um sniffer de rede que dispõe na tela os detalhes de cada frame que passa no computador.
+Um sniffer de rede inspirados por [Python 3 Network Packet Sniffer](https://github.com/EONRaider/Packet-Sniffer) que dispõe na tela os detalhes de cada frame que trafega no computador.
 
 ## Protocolos implementados
 

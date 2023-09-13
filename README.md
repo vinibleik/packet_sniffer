@@ -1,6 +1,6 @@
 # Packet Sniffer
 
-Fé / Faith
+Fé / Faith / Mercy
 
 Um sniffer de rede inspirados por [Python 3 Network Packet Sniffer](https://github.com/EONRaider/Packet-Sniffer) que dispõe na tela os detalhes de cada frame que trafega no computador.
 
